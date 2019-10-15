@@ -2014,8 +2014,8 @@ ul#themecolors {
 /*******************
  Card title
 *******************/
-.card {
-  margin-bottom: 30px; }
+ 
+
   .card .card-subtitle {
     font-weight: 300;
     margin-bottom: 15px;
@@ -6270,13 +6270,13 @@ File: scss
  ============================================================== */
 @media (min-width: 1024px) {
   .page-wrapper {
-    margin-left: 270px; }
+    margin-left: 0px; }
   .footer {
     left: 270px; } }
 
 @media (max-width: 1023px) {
   .page-wrapper {
-    margin-left: 60px;
+    margin-left: 0px;
     transition: 0.2s ease-in; }
   .footer {
     left: 60px; }
@@ -6300,7 +6300,7 @@ File: scss
     display: inline-block;
     line-height: 40px; }
   .mini-sidebar .page-wrapper {
-    margin-left: 60px; }
+    margin-left: 0px; }
   .mini-sidebar .footer {
     left: 60px; }
   .flex-wrap {
