@@ -26,6 +26,9 @@
     <link href="css/colors/blue.css" id="theme" rel="stylesheet">
     <!--This page css - Morris CSS -->
     <link href="../assets/plugins/morrisjs/morris.css" rel="stylesheet">
+
+    <link href="css/styles_stacc.css" rel="stylesheet">
+
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -50,18 +53,19 @@
                 <!-- ============================================================== -->
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.html">
-                         <b>
-                             <!-- Dark Logo icon -->
-                             <!-- Light Logo icon -->
-                            <img src="https://cdn.sanity.io/images/8j24leyc/production/ec6d45591df4f7a78906974042a85763da3784f0-312x312.png" style="width:80px;" alt="homepage" class="light-logo" />
+                        <b>
+                            <!-- Dark Logo icon -->
+                            <!-- Light Logo icon -->
+                            <img src="https://cdn.sanity.io/images/8j24leyc/production/ec6d45591df4f7a78906974042a85763da3784f0-312x312.png"
+                                style="width:80px;" alt="homepage" class="light-logo" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span>
                             <!-- dark Logo text -->
-                             <!-- Light Logo text -->
-                             <h3 style="display: inline-block;">Teknisk besvarelse</h3>
-                      </a>
+                            <!-- Light Logo text -->
+                            <h3 style="display: inline-block;">Teknisk besvarelse</h3>
+                    </a>
                 </div>
             </nav>
         </header>
@@ -77,10 +81,12 @@
                                     <div class="form-group">
                                         <label>Lånebeløp</label>
                                         <div class="input-icon input-icon-right">
-                                                <input id="input_lanebelop" type="text" class="form-control" value="2000000">
-                                                <i>kr</i>
-                                              </div>                                    </div>
-                                  </div>
+                                            <input id="input_lanebelop" type="text" class="form-control"
+                                                value="2000000">
+                                            <i>kr</i>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="progress">
                                         <div class="progress-bar bg-success" role="progressbar"
@@ -100,10 +106,12 @@
                                     <div class="form-group">
                                         <label>Nedbetalingstid</label>
                                         <div class="input-icon input-icon-right">
-                                                <input id="input_nedbetalingstid" type="text" class="form-control" value="20">
-                                                <i>år</i>
-                                              </div>                                    </div>
-                                 </div>
+                                            <input id="input_nedbetalingstid" type="text" class="form-control"
+                                                value="20">
+                                            <i>år</i>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="progress">
                                         <div class="progress-bar bg-info" role="progressbar"
@@ -122,10 +130,10 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Nominell rente</label>
-                                         <div class="input-icon input-icon-right">
+                                        <div class="input-icon input-icon-right">
                                             <input id="input_rente" type="text" class="form-control" value="3.00">
                                             <i>%</i>
-                                          </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -141,40 +149,54 @@
                     <!-- Column -->
                     <!-- Column -->
                     <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label>Avdragsfrihet</label>
-                                             <div class="input-icon input-icon-right">
-                                                <input id="input_avdragsfrihet" type="text" class="form-control" value="0">
-                                                <i>år</i>
-                                              </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Avdragsfrihet</label>
+                                        <div class="input-icon input-icon-right">
+                                            <input id="input_avdragsfrihet" type="text" class="form-control" value="0">
+                                            <i>år</i>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-danger" role="progressbar"
-                                                style="width: 56%; height: 6px;" aria-valuenow="25" aria-valuemin="0"
-                                                aria-valuemax="100"></div>
-                                        </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" role="progressbar"
+                                            style="width: 56%; height: 6px;" aria-valuenow="25" aria-valuemin="0"
+                                            aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <label>Månedlig beløp</label>
-                                         <h2>6221,-</h2>
-                                     </div>
-                                    <div class="col-12">
-                                            <button style="float:right" type="button" id="bnt_soklan" class="btn waves-effect waves-light btn-outline-info">Søk lån</button>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Månedlig beløp</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span>Første måned</span>
+                                            </div>
+                                        <div class="col-6">
+                                            <h2 id="belop_Forste" style="float:right">6157,-</h2>
+                                        </div>
+                                        <div class="col-6">
+                                                <span>Deretter</span>
+                                                </div>
+                                            <div class="col-6">
+                                                <h2 id="belop_Deretter" style="float:right">11089,-</h2>
+                                            </div>
                                     </div>
+                                 </div>
+                                <div class="col-12">
+                                    <button style="float:right" type="button" id="bnt_soklan"
+                                        class="btn waves-effect waves-light btn-outline-info">Søk lån</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
 
 
@@ -206,151 +228,69 @@
                                 <!--second tab-->
                                 <div class="tab-pane" id="profile" role="tabpanel">
                                     <div class="card-body">
-                                        <table id="example23"
-                                        class="display nowrap table table-hover table-striped table-bordered dataTable dtr-inline collapsed"
-                                        cellspacing="0" width="100%" role="grid"
-                                        aria-describedby="example23_info" style="width: 100%;">
-                                        <thead>
-                                            <tr role="row">
-                                                <th class="sorting_asc" tabindex="0"
-                                                    aria-controls="example23" rowspan="1"
-                                                    colspan="1" style="width: 131px; display: none;"
-                                                    aria-sort="ascending"
-                                                    aria-label="Name: activate to sort column descending">
-                                                    Name</th>
-                                                <th data-priority="1" class="sorting" tabindex="0"
-                                                    aria-controls="example23" rowspan="1"
-                                                    colspan="1" style="width: 205px;"
-                                                    aria-label="Position: activate to sort column ascending">
-                                                    Position</th>
-                                                <th class="sorting" tabindex="0"
-                                                    aria-controls="example23" rowspan="1"
-                                                    colspan="1" style="width: 94px; display: none;"
-                                                    aria-label="Office: activate to sort column ascending">
-                                                    Office</th>
-                                                <th data-priority="2" class="sorting" tabindex="0"
-                                                    aria-controls="example23" rowspan="1"
-                                                    colspan="1" style="width: 32px;"
-                                                    aria-label="Age: activate to sort column ascending">
-                                                    Age</th>
-                                                <th class="sorting" tabindex="0"
-                                                    aria-controls="example23" rowspan="1"
-                                                    colspan="1" style="width: 82px; display: none;"
-                                                    aria-label="Start date: activate to sort column ascending">
-                                                    Start date</th>
-                                                <th class="sorting" tabindex="0"
-                                                    aria-controls="example23" rowspan="1"
-                                                    colspan="1" style="width: 60px;"
-                                                    aria-label="Salary: activate to sort column ascending">
-                                                    Salary</th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th rowspan="1" colspan="1" style="display: none;">
-                                                    Name</th>
-                                                <th rowspan="1" colspan="1">Position</th>
-                                                <th rowspan="1" colspan="1" style="display: none;">
-                                                    Office</th>
-                                                <th rowspan="1" colspan="1">Age</th>
-                                                <th rowspan="1" colspan="1" style="display: none;">
-                                                    Start date</th>
-                                                <th rowspan="1" colspan="1">Salary</th>
-                                            </tr>
-                                        </tfoot>
-                                        <tbody>
-                                            <tr role="row" class="odd">
-                                                <td tabindex="0" class="sorting_1"
-                                                    style="display: none;">Airi Satou</td>
-                                                <td>Accountant</td>
-                                                <td style="display: none;">Tokyo</td>
-                                                <td>33</td>
-                                                <td style="display: none;">2008/11/28</td>
-                                                <td>$162,700</td>
-                                            </tr>
-                                            <tr role="row" class="even">
-                                                <td class="sorting_1" tabindex="0"
-                                                    style="display: none;">Angelica Ramos</td>
-                                                <td>Chief Executive Officer (CEO)</td>
-                                                <td style="display: none;">London</td>
-                                                <td>47</td>
-                                                <td style="display: none;">2009/10/09</td>
-                                                <td>$1,200,000</td>
-                                            </tr>
-                                            <tr role="row" class="odd">
-                                                <td tabindex="0" class="sorting_1"
-                                                    style="display: none;">Ashton Cox</td>
-                                                <td>Junior Technical Author</td>
-                                                <td style="display: none;">San Francisco</td>
-                                                <td>66</td>
-                                                <td style="display: none;">2009/01/12</td>
-                                                <td>$86,000</td>
-                                            </tr>
-                                            <tr role="row" class="even">
-                                                <td class="sorting_1" tabindex="0"
-                                                    style="display: none;">Bradley Greer</td>
-                                                <td>Software Engineer</td>
-                                                <td style="display: none;">London</td>
-                                                <td>41</td>
-                                                <td style="display: none;">2012/10/13</td>
-                                                <td>$132,000</td>
-                                            </tr>
-                                            <tr role="row" class="odd">
-                                                <td class="sorting_1" tabindex="0"
-                                                    style="display: none;">Brenden Wagner</td>
-                                                <td>Software Engineer</td>
-                                                <td style="display: none;">San Francisco</td>
-                                                <td>28</td>
-                                                <td style="display: none;">2011/06/07</td>
-                                                <td>$206,850</td>
-                                            </tr>
-                                            <tr role="row" class="even">
-                                                <td tabindex="0" class="sorting_1"
-                                                    style="display: none;">Brielle Williamson</td>
-                                                <td>Integration Specialist</td>
-                                                <td style="display: none;">New York</td>
-                                                <td>61</td>
-                                                <td style="display: none;">2012/12/02</td>
-                                                <td>$372,000</td>
-                                            </tr>
-                                            <tr role="row" class="odd">
-                                                <td class="sorting_1" tabindex="0"
-                                                    style="display: none;">Bruno Nash</td>
-                                                <td>Software Engineer</td>
-                                                <td style="display: none;">London</td>
-                                                <td>38</td>
-                                                <td style="display: none;">2011/05/03</td>
-                                                <td>$163,500</td>
-                                            </tr>
-                                            <tr role="row" class="even">
-                                                <td class="sorting_1" tabindex="0"
-                                                    style="display: none;">Caesar Vance</td>
-                                                <td>Pre-Sales Support</td>
-                                                <td style="display: none;">New York</td>
-                                                <td>21</td>
-                                                <td style="display: none;">2011/12/12</td>
-                                                <td>$106,450</td>
-                                            </tr>
-                                            <tr role="row" class="odd">
-                                                <td class="sorting_1" tabindex="0"
-                                                    style="display: none;">Cara Stevens</td>
-                                                <td>Sales Assistant</td>
-                                                <td style="display: none;">New York</td>
-                                                <td>46</td>
-                                                <td style="display: none;">2011/12/06</td>
-                                                <td>$145,600</td>
-                                            </tr>
-                                            <tr role="row" class="even">
-                                                <td tabindex="0" class="sorting_1"
-                                                    style="display: none;">Cedric Kelly</td>
-                                                <td>Senior Javascript Developer</td>
-                                                <td style="display: none;">Edinburgh</td>
-                                                <td>22</td>
-                                                <td style="display: none;">2012/03/29</td>
-                                                <td>$433,060</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                        <table id="table_detaljertOversikt"
+                                            class="display nowrap table table-hover table-striped table-bordered dataTable dtr-inline collapsed"
+                                            cellspacing="0" width="100%" role="grid" aria-describedby="example23_info"
+                                            style="width: 100%;">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th data-priority="1" class="sorting" tabindex="0"
+                                                        aria-controls="example23" rowspan="1" colspan="1"
+                                                        style="width: 205px;"
+                                                        aria-label="Position: activate to sort column ascending">
+                                                        Dato</th>
+
+                                                    <th data-priority="1" class="sorting" tabindex="0"
+                                                        aria-controls="example23" rowspan="1" colspan="1"
+                                                        style="width: 205px;"
+                                                        aria-label="Position: activate to sort column ascending">
+                                                        Innbetaling</th>
+
+                                                    <th data-priority="1" class="sorting" tabindex="0"
+                                                        aria-controls="example23" rowspan="1" colspan="1"
+                                                        style="width: 205px;"
+                                                        aria-label="Position: activate to sort column ascending">
+                                                        Renter</th>
+
+                                                    <th data-priority="1" class="sorting" tabindex="0"
+                                                        aria-controls="example23" rowspan="1" colspan="1"
+                                                        style="width: 205px;"
+                                                        aria-label="Position: activate to sort column ascending">
+                                                        Gebyr</th>
+
+                                                    <th data-priority="1" class="sorting" tabindex="0"
+                                                        aria-controls="example23" rowspan="1" colspan="1"
+                                                        style="width: 205px;"
+                                                        aria-label="Position: activate to sort column ascending">
+                                                        Totalt å betale</th>
+
+                                                    <th data-priority="1" class="sorting" tabindex="0"
+                                                        aria-controls="example23" rowspan="1" colspan="1"
+                                                        style="width: 205px;"
+                                                        aria-label="Position: activate to sort column ascending">
+                                                        Restgjeld</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th rowspan="1" colspan="1">
+                                                        Dato</th>
+                                                    <th rowspan="1" colspan="1">
+                                                        Innbetaling</th>
+                                                    <th rowspan="1" colspan="1">
+                                                        Renter</th>
+                                                    <th rowspan="1" colspan="1">
+                                                        Gebyr</th>
+                                                    <th rowspan="1" colspan="1">
+                                                        Totalt å betale</th>
+                                                    <th rowspan="1" colspan="1">
+                                                        Restgjeld</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -358,7 +298,7 @@
                         <!-- Column -->
 
                     </div>
-                    
+
                     <div class="right-sidebar">
                         <div class="slimscrollright">
                             <div class="rpanel-title"> Service Panel <span><i
@@ -446,7 +386,7 @@
 
             </div>
 
- 
+
             <script src="../assets/plugins/jquery/jquery.min.js"></script>
             <!-- Bootstrap tether Core JavaScript -->
             <script src="../assets/plugins/popper/popper.min.js"></script>
@@ -482,8 +422,10 @@
             <script src="../assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 
             <script src="index _stacc.js"></script>
- 
- 
+            <script src="https://cdn.rawgit.com/adriancooney/console.image/c9e6d4fd/console.image.min.js"></script>
+
+
+
 
 </body>
 

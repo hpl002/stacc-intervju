@@ -1,3 +1,17 @@
+ 
+$(function(){
+    /*prevent empty table*/
+    getDataFromPost(getDataFromForm())
+    console.log('init')
+    hehe().one(true)
+})
+
+function hehe(pBoolean){
+    if(pBoolean){
+    console.image("https://cdn.sanity.io/images/8j24leyc/production/ec6d45591df4f7a78906974042a85763da3784f0-312x312.png");
+}
+}
+
 var data_Default = JSON.stringify({
     laanebelop: 2000000,
     nominellRente: 3,
@@ -12,7 +26,7 @@ var data_Default = JSON.stringify({
 $('#bnt_soklan').click(function () {
     console.log('getting data from post')
     getDataFromPost(getDataFromForm())
-})
+ })
 
 
 function getDataFromForm() {
@@ -31,8 +45,8 @@ function getDataFromForm() {
         nominellRente: vRente,
         terminGebyr: 30,
         utlopsDato: vNedbetalingstid,
-        saldoDato: currDate, ¨
-        datoForsteInnbetaling: currDate,
+        saldoDato: currDate,
+        datoForsteInnbetaling: vAvdragsfrihet,
         ukjentVerdi: "TERMINBELOP"
     })
 
@@ -60,14 +74,44 @@ function getDataFromPost(pData) {
         }
     })
         .then(response => response.json())
-        .then(json => console.log(json))
-        .then(console.log('here i would break down the actual json file and send it to its respected methods'))
-        .catch(function (error) {
+        .then(function(data) {
+            if(data.valideringsfeilmeldinger!=null){
+                alert(data.valideringsfeilmeldinger.feilmelding)
+            }
+            else{
+                console.log(data)
+                 drawTable(data.nedbetalingsplan.innbetalinger)
+                 updatePaymentsOverview(data.nedbetalingsplan.innbetalinger)
+            }
+            })
+          .catch(function (error) {
             console.log(error)
         });
 }
 
-/*only pass the data that is necessary to creat a single row, then return this*/
-function createTableRow(pData) {
 
+function drawTable(pData){
+    $('#table_detaljertOversikt tbody').children().remove()
+    /*for each element in array, create a new row and append this to table*/
+    for (const element of pData) {
+        insertRow(element);
+    }
+}
+
+
+/*only pass the data that is necessary to creat a single row, then return this*/
+function insertRow(pData) {
+     var newRow = '<tr role="row"><td>'+pData.dato+'</td><td class="number">'+financial(pData.innbetaling)+'</td><td>'+financial(pData.renter)+'</td><td>'+financial(pData.gebyr)+'</td><td>'+financial(pData.total)+'</td><td>'+financial(pData.restgjeld)+'</td>'    
+     $('#table_detaljertOversikt tbody').append(newRow)
+}
+
+function updatePaymentsOverview(pData){
+$('#belop_Forste').html(financial(pData[1].total)+',-')
+$('#belop_Deretter').html(financial(pData[2].total)+',-')
+}
+
+
+/*Helper */
+ function financial(x) {
+  return Math.ceil(x);
 }
