@@ -3,7 +3,23 @@
      getDataFromPost(getDataFromForm())
      console.log('init')
      hehe(false)
+     initSliders()
  })
+
+ function initSliders(){
+     $("#slider_avdragsfrihet").ionRangeSlider({
+        type: "single",
+        min: 0,
+        max: 10,
+        from: 0,
+        to: 10,
+        grid: false,
+        onChange: function (data) {
+              $('#input_avdragsfrihet').val(data.from)
+        }
+    });
+ }
+ 
 
  function hehe(pBoolean) {
      if (pBoolean) {
