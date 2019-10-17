@@ -1590,8 +1590,7 @@ Layouts
 .progress {
   height: auto; }
 
-.card-group {
-  margin-bottom: 30px; }
+ 
 
 .tablesaw [type="checkbox"]:not(:checked), .tablesaw [type="checkbox"]:checked,
 .fixed-table-container [type="checkbox"]:not(:checked),

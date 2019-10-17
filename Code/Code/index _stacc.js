@@ -1,31 +1,12 @@
  $(function() {
      /*prevent empty table*/
      getDataFromPost(getDataFromForm())
-     console.log('init')
-     hehe(false)
-     initSliders()
- })
+  })
 
- function initSliders(){
-     $("#slider_avdragsfrihet").ionRangeSlider({
-        type: "single",
-        min: 0,
-        max: 10,
-        from: 0,
-        to: 10,
-        grid: false,
-        onChange: function (data) {
-              $('#input_avdragsfrihet').val(data.from)
-        }
-    });
- }
+  
  
 
- function hehe(pBoolean) {
-     if (pBoolean) {
-         console.image("https://cdn.sanity.io/images/8j24leyc/production/ec6d45591df4f7a78906974042a85763da3784f0-312x312.png");
-     }
- }
+ 
 
  var data_Default = JSON.stringify({
      laanebelop: 2000000,
