@@ -76,6 +76,7 @@ function getDataFromPost(pData) {
         iterateOverData(data.nedbetalingsplan.innbetalinger)
         updatePaymentsOverview(data.nedbetalingsplan.innbetalinger)
         updatePieGraph()
+        updateBreakdown()
       }
     })
     .catch(function(error) {
@@ -149,6 +150,13 @@ function updatePieGraph(){
   
     new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
 }
+
+function updateBreakdown(){
+    $('#sum_lanebelop').html(financial(gInnbetalinger))
+    $('#sum_gebyrer').html(' + '+financial(gGebyr))
+    $('#sum_renter').html(' + '+financial(gRenter))
+    $('#sum_totaleInnbetalinger').html(' = '+financial(gTotalt))
+ }
 
 function addToTotals(pData) {
   gInnbetalinger += pData.innbetaling

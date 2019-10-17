@@ -1,43 +1,61 @@
-                                                        .input-icon {
-                                                            position: relative;
-                                                        }
-                                                        
-                                                        .input-icon>i {
-                                                            position: absolute;
-                                                            display: block;
-                                                            transform: translate(0, -50%);
-                                                            top: 50%;
-                                                            pointer-events: none;
-                                                            width: 25px;
-                                                            text-align: center;
-                                                            font-style: normal;
-                                                        }
-                                                        
-                                                        .input-icon>input {
-                                                            padding-left: 25px;
-                                                            padding-right: 0;
-                                                        }
-                                                        
-                                                        .input-icon-right>i {
-                                                            right: 0;
-                                                        }
-                                                        
-                                                        .input-icon-right>input {
-                                                            padding-left: 0;
-                                                            padding-right: 25px;
-                                                            text-align: right;
-                                                        }
-                                                        
-                                                        #table_detaljertOversikt>tbody>tr:nth-child(1) {
-                                                            display: none;
-                                                        }
-                                                        /**/
-                                                        
-                                                        @media screen and (max-width: 1100px) {
-                                                            .card-group {
-                                                                flex-direction: column;
-                                                            }
-                                                            div.card-group>div.card {
-                                                                margin-bottom: 15px !important
-                                                            }
-                                                        }
+.input-icon {
+    position: relative;
+}
+
+.input-icon>i {
+    position: absolute;
+    display: block;
+    transform: translate(0, -50%);
+    top: 50%;
+    pointer-events: none;
+    width: 25px;
+    text-align: center;
+    font-style: normal;
+}
+
+.input-icon>input {
+    padding-left: 25px;
+    padding-right: 0;
+}
+
+.input-icon-right>i {
+    right: 0;
+}
+
+.input-icon-right>input {
+    padding-left: 0;
+    padding-right: 25px;
+    text-align: right;
+}
+
+#table_detaljertOversikt>tbody>tr:nth-child(1) {
+    display: none;
+}
+
+#home > div:nth-child(2) > div.col-4 > table > tbody > tr:nth-child(4) { 
+    border-bottom: none !important; 
+}
+
+
+#home > div:nth-child(2) > div.col-4 > table > tbody > tr {
+    border-bottom: 1px solid #d8dee4;
+}
+ 
+
+
+ 
+
+
+
+
+/*media queries*/
+
+@media screen and (max-width: 1100px) {
+    .card-group {
+        flex-direction: column;
+    }
+    div.card-group>div.card {
+        margin-bottom: 15px !important
+    }
+}
+

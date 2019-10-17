@@ -182,26 +182,53 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs profile-tab" role="tablist">
                   <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Graph</a> </li>
-                  <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#pie" role="tab">Pie Graph</a> </li>
-                  <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Detailed overview</a> </li>
-                 </ul>
+                   <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Detailed overview</a> </li>
+                </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
                   <div class="tab-pane active" id="home" role="tabpanel">
                     <div class="row">
-                      <div class="col-12 col-lg-8">
+                      <div class="col-12">
                         <div class="card">
                           <div class="chartist-chart andvios" style="height:350px;"> </div>
                         </div>
                       </div>
-                      <div class="col-12 col-lg-4">
-                            <div class="ct-chart" style="height:350px;"></div>
-                           </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-4" style="padding-left:30px">
+                        <table style="height: 100%; width: 100%">
+                          <tbody>
+                             <tr>
+                              <td class="align-middle">                                <h3>Lånebeløp <span style="float:right" id="sum_lanebelop"></span></h3>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="align-middle">                                <h3>Gebyrer <span style="float:right" id="sum_gebyrer"></span></h3>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="align-middle">                                <h3>Renter <span style="float:right" id="sum_renter"></span></h3>
+                              </td>
+                            </tr>
+                            <tr>
+                                    <td class="align-middle">
+                                      <h3>Sum  totale innbetalinger <span style="float:right" id="sum_totaleInnbetalinger"></span></h3>
+                                    </td>
+                                  </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-8">
+                        <div class="card">
+                          <div class="ct-chart" style="height:350px;"></div>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
 
-                  
+
 
                   <!--second tab-->
                   <div class="tab-pane" id="profile" role="tabpanel">
@@ -359,7 +386,7 @@
         <script src="index _stacc.js"></script>
         <script src="https://cdn.rawgit.com/adriancooney/console.image/c9e6d4fd/console.image.min.js"></script>
 
-  
+
 
   </body>
 
