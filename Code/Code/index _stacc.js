@@ -7,7 +7,7 @@ var Totals={
  
 var DownpaymentGraph={
     series:[[],[]],
-    labels:[],
+    labels:[[],[]],
  }
 
  var data_Default = JSON.stringify({
@@ -92,7 +92,7 @@ function resetData(){
     Totals.Gebyr = 0;
     Totals.Totalt = 0;
 
-    DownpaymentGraph.labels=[]
+    DownpaymentGraph.labels=[[],[]]
     DownpaymentGraph.series=[[],[]]
 }
 
@@ -109,8 +109,8 @@ function iterateOverData(pData) {
 
 function createLabelAndSeries(pData, pJSONBody){
     /*for every new year, push */
-    if(!DownpaymentGraph.labels.includes(pData.dato.slice(0,4))){
-        DownpaymentGraph.labels.push(pData.dato.slice(0,4))
+    if(!DownpaymentGraph.labels[0].includes(pData.dato.slice(0,4))){
+        DownpaymentGraph.labels[0].push(pData.dato.slice(0,4))
         DownpaymentGraph.series[0].push(pJSONBody.laanebelop-financial(pData.restgjeld))
         DownpaymentGraph.series[1].push(financial(pData.restgjeld))
       }
@@ -118,26 +118,34 @@ function createLabelAndSeries(pData, pJSONBody){
 
 /*only pass the data that is necessary to creat a single row, then return this*/
 function insertRow(pData) {
-  var newRow = '<tr role="row"><td>' + pData.dato + '</td><td class="number">' + financial(pData.innbetaling) + '</td><td>' + financial(pData.renter) + '</td><td>' + financial(pData.gebyr) + '</td><td>' + financial(pData.total) + '</td><td>' + financial(pData.restgjeld) + '</td>'
+  var newRow = '<tr role="row"><td>' + pData.dato + '</td><td class="number">' + financial_format(pData.innbetaling) + '</td><td>' + financial_format(pData.renter) + '</td><td>' + financial_format(pData.gebyr) + '</td><td>' + financial_format(pData.total) + '</td><td>' + financial_format(pData.restgjeld) + '</td>'
   $('#table_detaljertOversikt tbody').append(newRow)
 }
 
 function updatePaymentsOverview(pData) {
-  $('#belop_Forste').html(financial(pData[1].total) + ',-')
-  $('#belop_Deretter').html(financial(pData[2].total) + ',-')
+  $('#belop_Forste').html(financial_format(pData[1].total))
+  $('#belop_Deretter').html(financial_format(pData[2].total))
 }
 
  
 
 function updateDownpaymentGraph(){
      var chart = new Chartist.Line('#chart_downpayment', {
-        labels: DownpaymentGraph.labels,
+        labels: DownpaymentGraph.labels[0],
         series: [DownpaymentGraph.series[0],DownpaymentGraph.series[1]]
       }, {
         low: 0,
         showArea: true,
         showPoint: false,
-        fullWidth: true
+        fullWidth: true,
+        chartPadding: 30,
+  labelOffset: 50,
+  axisY: {
+       labelInterpolationFnc: function(value, index) {
+        return financial_format(value);
+      },
+      stretch: true
+    }
       });
       
       chart.on('draw', function(data) {
@@ -157,10 +165,10 @@ function updateDownpaymentGraph(){
 }
 
 function updatePieGraph(){
-    var label_innbetalinger = 'Lånebeløπ ' + financial(Totals.Innbetalinger).toString()
-    var label_renter = 'Renter ' + financial(Totals.Renter).toString()
-    var label_gebyr = 'Gebyr ' + financial(Totals.Gebyr).toString()
-    var label_totalt = 'Totalt ' + financial(Totals.Totalt).toString()
+    var label_innbetalinger = 'Lånebeløp ' + financial_format(Totals.Innbetalinger).toString()
+    var label_renter = 'Renter ' + financial_format(Totals.Renter).toString()
+    var label_gebyr = 'Gebyr ' + financial_format(Totals.Gebyr).toString()
+    var label_totalt = 'Totalt ' + financial_format(Totals.Totalt).toString()
   
   
     var data = {
@@ -193,10 +201,10 @@ function updatePieGraph(){
 }
 
 function updateBreakdown(){
-    $('#sum_lanebelop').html(financial(Totals.Innbetalinger))
-    $('#sum_gebyrer').html(' + '+financial(Totals.Gebyr))
-    $('#sum_renter').html(' + '+financial(Totals.Renter))
-    $('#sum_totaleInnbetalinger').html(' = '+financial(Totals.Totalt))
+    $('#sum_lanebelop').html(financial_format(Totals.Innbetalinger))
+    $('#sum_gebyrer').html(' + '+financial_format(Totals.Gebyr))
+    $('#sum_renter').html(' + '+financial_format(Totals.Renter))
+    $('#sum_totaleInnbetalinger').html(' = '+financial_format(Totals.Totalt))
  }
 
 function addToTotals(pData) {
@@ -211,6 +219,10 @@ function addToTotals(pData) {
 function financial(x) {
   return Math.ceil(x);
 }
+
+function financial_format(x) {
+   return numeral(financial(x)).format('0,0').replace(/[ ,.]/g, " ")+' ,-';
+    }
 
 function addYearsToCurrentDate(pYear) {
     if (pYear != null) {
