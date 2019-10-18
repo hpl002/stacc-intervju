@@ -1,36 +1,41 @@
-var Totals={
-    Innbetalinger:0,
-    Renter:0,
-    Gebyr:0,
-    Totalt:0,
+var Totals = {
+  Innbetalinger: 0,
+  Renter: 0,
+  Gebyr: 0,
+  Totalt: 0,
 }
- 
-var DownpaymentGraph={
-    series:[[],[]],
-    labels:[[],[]],
- }
 
- var data_Default = JSON.stringify({
-    laanebelop: 2000000,
-    nominellRente: 3,
-    terminGebyr: 30,
-    utlopsDato: "2045-01-01",
-    saldoDato: "2020-01-01",
-    datoForsteInnbetaling: "2020-02-01",
-    ukjentVerdi: "TERMINBELOP"
-  })
+var DownpaymentGraph = {
+  series: [
+    [],
+    []
+  ],
+  labels: [
+    [],
+    []
+  ],
+}
+
+var data_Default = JSON.stringify({
+  laanebelop: 2000000,
+  nominellRente: 3,
+  terminGebyr: 30,
+  utlopsDato: "2045-01-01",
+  saldoDato: "2020-01-01",
+  datoForsteInnbetaling: "2020-02-01",
+  ukjentVerdi: "TERMINBELOP"
+})
 
 
 $(function() {
-   getDataFromPost(getDataFromForm())
+  getDataFromPost(getDataFromForm())
 })
- 
- /*Events*/
+
+/*Events*/
 $('#bnt_soklan').click(function() {
   console.log('getting data from post')
   getDataFromPost(getDataFromForm())
 })
-
 
 function getDataFromForm() {
   var vBelop = $('#input_lanebelop').val()
@@ -52,15 +57,11 @@ function getDataFromForm() {
     datoForsteInnbetaling: vAvdragsfrihet,
     ukjentVerdi: "TERMINBELOP"
   })
-
   return vData
 }
 
- 
-
-
 function getDataFromPost(pData) {
-   fetch('https://visningsrom.stacc.com/dd_server_laaneberegning/rest/laaneberegning/v1/nedbetalingsplan', {
+  fetch('https://visningsrom.stacc.com/dd_server_laaneberegning/rest/laaneberegning/v1/nedbetalingsplan', {
       method: 'POST',
       body: pData,
       headers: {
@@ -86,16 +87,21 @@ function getDataFromPost(pData) {
     });
 }
 
-function resetData(){
-    Totals.Innbetalinger = 0;
-    Totals.Renter = 0;
-    Totals.Gebyr = 0;
-    Totals.Totalt = 0;
+function resetData() {
+  Totals.Innbetalinger = 0;
+  Totals.Renter = 0;
+  Totals.Gebyr = 0;
+  Totals.Totalt = 0;
 
-    DownpaymentGraph.labels=[[],[]]
-    DownpaymentGraph.series=[[],[]]
+  DownpaymentGraph.labels = [
+    [],
+    []
+  ]
+  DownpaymentGraph.series = [
+    [],
+    []
+  ]
 }
-
 
 function iterateOverData(pData) {
   $('#table_detaljertOversikt tbody').children().remove()
@@ -103,17 +109,17 @@ function iterateOverData(pData) {
   for (const element of pData) {
     insertRow(element);
     addToTotals(element)
-    createLabelAndSeries(element,JSON.parse(getDataFromForm()))
+    createLabelAndSeries(element, JSON.parse(getDataFromForm()))
   }
 }
 
-function createLabelAndSeries(pData, pJSONBody){
-    /*for every new year, push */
-    if(!DownpaymentGraph.labels[0].includes(pData.dato.slice(0,4))){
-        DownpaymentGraph.labels[0].push(pData.dato.slice(0,4))
-        DownpaymentGraph.series[0].push(pJSONBody.laanebelop-financial(pData.restgjeld))
-        DownpaymentGraph.series[1].push(financial(pData.restgjeld))
-      }
+function createLabelAndSeries(pData, pJSONBody) {
+  /*for every new year, push */
+  if (!DownpaymentGraph.labels[0].includes(pData.dato.slice(0, 4))) {
+    DownpaymentGraph.labels[0].push(pData.dato.slice(0, 4))
+    DownpaymentGraph.series[0].push(pJSONBody.laanebelop - financial(pData.restgjeld))
+    DownpaymentGraph.series[1].push(financial(pData.restgjeld))
+  }
 }
 
 /*only pass the data that is necessary to creat a single row, then return this*/
@@ -127,85 +133,83 @@ function updatePaymentsOverview(pData) {
   $('#belop_Deretter').html(financial_format(pData[2].total))
 }
 
- 
-
-function updateDownpaymentGraph(){
-     var chart = new Chartist.Line('#chart_downpayment', {
-        labels: DownpaymentGraph.labels[0],
-        series: [DownpaymentGraph.series[0],DownpaymentGraph.series[1]]
-      }, {
-        low: 0,
-        showArea: true,
-        showPoint: false,
-        fullWidth: true,
-        chartPadding: 30,
-  labelOffset: 50,
-  axisY: {
-       labelInterpolationFnc: function(value, index) {
-        return financial_format(value);
+function updateDownpaymentGraph() {
+  var chart = new Chartist.Line('#chart_downpayment', {
+    labels: DownpaymentGraph.labels[0],
+    series: [DownpaymentGraph.series[0], DownpaymentGraph.series[1]]
+  }, {
+    low: 0,
+    showArea: true,
+    showPoint: false,
+    fullWidth: true,
+    chartPadding: 30,
+    labelOffset: 50,
+    axisY: {
+      labelInterpolationFnc: function(value, index) {
+        return value
       },
       stretch: true
     }
-      });
-      
-      chart.on('draw', function(data) {
-        if(data.type === 'line' || data.type === 'area') {
-          data.element.animate({
-            d: {
-              begin: 2000 * data.index,
-              dur: 2000,
-              from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-              to: data.path.clone().stringify(),
-              easing: Chartist.Svg.Easing.easeOutQuint
-            }
-          });
+  });
+
+  chart.on('draw', function(data) {
+    if (data.type === 'line' || data.type === 'area') {
+      data.element.animate({
+        d: {
+          begin: 2000 * data.index,
+          dur: 2000,
+          from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+          to: data.path.clone().stringify(),
+          easing: Chartist.Svg.Easing.easeOutQuint
         }
       });
-      
+    }
+  });
+
 }
 
-function updatePieGraph(){
-    var label_innbetalinger = 'Lånebeløp ' + financial_format(Totals.Innbetalinger).toString()
-    var label_renter = 'Renter ' + financial_format(Totals.Renter).toString()
-    var label_gebyr = 'Gebyr ' + financial_format(Totals.Gebyr).toString()
-    var label_totalt = 'Totalt ' + financial_format(Totals.Totalt).toString()
-  
-  
-    var data = {
-      labels: [label_innbetalinger, label_renter, label_gebyr],
-      series: [Totals.Innbetalinger, Totals.Renter, Totals.Gebyr]
-    };
-  
-    var options = {
+function updatePieGraph() {
+  var label_innbetalinger = 'Lånebeløp ' + financial_format(Totals.Innbetalinger).toString()
+  var label_renter = 'Renter ' + financial_format(Totals.Renter).toString()
+  var label_gebyr = 'Gebyr ' + financial_format(Totals.Gebyr).toString()
+  var label_totalt = 'Totalt ' + financial_format(Totals.Totalt).toString()
+
+
+  var data = {
+    labels: [label_innbetalinger, label_renter, label_gebyr],
+    series: [Totals.Innbetalinger, Totals.Renter, Totals.Gebyr]
+  };
+
+  var options = {
+    labelInterpolationFnc: function(value) {
+      return value[0]
+    }
+  };
+
+  var responsiveOptions = [
+    ['screen and (min-width: 640px)', {
+      chartPadding: 30,
+      labelOffset: 100,
+      labelDirection: 'implode',
       labelInterpolationFnc: function(value) {
-        return value[0]
+        return value;
       }
-    };
-  
-    var responsiveOptions = [
-      ['screen and (min-width: 640px)', {
-        chartPadding: 30,
-        labelOffset: 100,
-        labelDirection: 'implode',
-        labelInterpolationFnc: function(value) {
-          return value;
-        }
-      }],
-      ['screen and (min-width: 1024px)', {
-        labelOffset: 80,
-        chartPadding: 20
-      }]
-    ];
-  
-    new Chartist.Pie('#chart_pie', data, options, responsiveOptions);
+    }],
+    ['screen and (min-width: 1024px)', {
+      labelOffset: 80,
+      chartPadding: 20
+    }]
+  ];
+
+  new Chartist.Pie('#chart_pie', data, options, responsiveOptions);
 }
 
-function updateBreakdown(){
-    $('#sum_lanebelop').html(financial_format(Totals.Innbetalinger))
-    $('#sum_gebyrer').html(' + '+financial_format(Totals.Gebyr))
-    $('#sum_renter').html(' + '+financial_format(Totals.Renter))
-    $('#sum_totaleInnbetalinger').html(' = '+financial_format(Totals.Totalt))
- }
+function updateBreakdown() {
+  $('#sum_lanebelop').html(financial_format(Totals.Innbetalinger))
+  $('#sum_gebyrer').html(' + ' + financial_format(Totals.Gebyr))
+  $('#sum_renter').html(' + ' + financial_format(Totals.Renter))
+  $('#sum_totaleInnbetalinger').html(' = ' + financial_format(Totals.Totalt))
+}
 
 function addToTotals(pData) {
   Totals.Innbetalinger += pData.innbetaling
@@ -221,15 +225,15 @@ function financial(x) {
 }
 
 function financial_format(x) {
-   return numeral(financial(x)).format('0,0').replace(/[ ,.]/g, " ")+' ,-';
-    }
+  return numeral(financial(x)).format('0,0').replace(/[ ,.]/g, " ") + ' ,-';
+}
 
 function addYearsToCurrentDate(pYear) {
-    if (pYear != null) {
-      var currDate = new Date().toISOString().slice(0, 10);
-      var currYear = new Date().toISOString().slice(0, 4);
-      return parseInt(currYear) + parseInt(pYear) + currDate.slice(4, 10)
-    } else {
-      return new Date().toISOString().slice(0, 10);
-    }
+  if (pYear != null) {
+    var currDate = new Date().toISOString().slice(0, 10);
+    var currYear = new Date().toISOString().slice(0, 4);
+    return parseInt(currYear) + parseInt(pYear) + currDate.slice(4, 10)
+  } else {
+    return new Date().toISOString().slice(0, 10);
   }
+}
