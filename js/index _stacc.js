@@ -1,3 +1,5 @@
+var gCurrEndpoint='https://visningsrom.stacc.com/dd_server_laaneberegning/rest/laaneberegning/v1/nedbetalingsplan';
+
 var Totals = {
   Innbetalinger: 0,
   Renter: 0,
@@ -37,6 +39,14 @@ $('#bnt_soklan').click(function() {
   getDataFromPost(getDataFromForm())
 })
 
+ $('#dropdown_stacc').click(function(){
+  gCurrEndpoint='https://visningsrom.stacc.com/dd_server_laaneberegning/rest/laaneberegning/v1/nedbetalingsplan'
+})
+
+$('#dropdown_local').click(function(){
+  gCurrEndpoint='http://localhost:5050/api'
+ })
+
 function getDataFromForm() {
   var vBelop = $('#input_lanebelop').val()
   var vNedbetalingstid = $('#input_nedbetalingstid').val()
@@ -61,7 +71,7 @@ function getDataFromForm() {
 }
 
 function getDataFromPost(pData) {
-  fetch('https://visningsrom.stacc.com/dd_server_laaneberegning/rest/laaneberegning/v1/nedbetalingsplan', {
+  fetch(gCurrEndpoint, {
       method: 'POST',
       body: pData,
       headers: {

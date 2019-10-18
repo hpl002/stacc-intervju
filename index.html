@@ -24,6 +24,8 @@
     </div>
     <div id="main-wrapper">
       <header class="topbar">
+
+        
         <nav class="navbar top-navbar navbar-expand-md navbar-light">
           <div class="navbar-header">
             <a class="navbar-brand" href="index.html">
@@ -32,9 +34,9 @@
               </b>
               <span>
                 <h3 style="display: inline-block;color:white">Teknisk besvarelse</h3>
-            </a>
-          </div>
-        </nav>
+              </a>
+            </div>
+          </nav>
       </header>
       <div class="page-wrapper">
         <div class="container-fluid" style="padding-top:30px;">
@@ -118,8 +120,19 @@
           </div>
           <div class="row" style="margin-top:15px;margin-right:15px;margin-bottom: 15px">
             <div class="col-12">
-              <button style="float:right" type="button" id="bnt_soklan" class="btn waves-effect waves-light btn-info">Søk lån</button>
-            </div>
+                 <div class="btn-group" role="group" aria-label="Basic example">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Dropdown button
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" id="dropdown_stacc" href="#">Stacc endpoint</a>
+                          <a class="dropdown-item" id="dropdown_local" href="#">Localhost 5050</a>
+                         </div>
+                      </div>
+                  <button style="float:right" type="button" id="bnt_soklan" class="btn waves-effect waves-light btn-info">Søk lån</button>
+                  </div>
+             </div>
           </div>
           <div class="row">
             <div class="col-lg-12 col-xlg-12 col-md-12">
@@ -216,6 +229,7 @@
             </div>
           </div>
         </div>
+        <script src="js/popper/popper.min.js"></script>
         <script src="js/jquery/jquery.min.js"></script>
         <script src="js/bootstrap/js/bootstrap.min.js"></script>
         <script src="js/custom.min.js"></script>
