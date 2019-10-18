@@ -1,22 +1,31 @@
-var gInnbetalinger
-var gRenter
-var gGebyr
-var gTotalt
+var Totals={
+    Innbetalinger:0,
+    Renter:0,
+    Gebyr:0,
+    Totalt:0,
+}
+ 
+var DownpaymentGraph={
+    series:[[],[]],
+    labels:[],
+ }
+
+ var data_Default = JSON.stringify({
+    laanebelop: 2000000,
+    nominellRente: 3,
+    terminGebyr: 30,
+    utlopsDato: "2045-01-01",
+    saldoDato: "2020-01-01",
+    datoForsteInnbetaling: "2020-02-01",
+    ukjentVerdi: "TERMINBELOP"
+  })
+
+
 $(function() {
-  /*prevent empty table*/
-  getDataFromPost(getDataFromForm())
+   getDataFromPost(getDataFromForm())
 })
-var data_Default = JSON.stringify({
-  laanebelop: 2000000,
-  nominellRente: 3,
-  terminGebyr: 30,
-  utlopsDato: "2045-01-01",
-  saldoDato: "2020-01-01",
-  datoForsteInnbetaling: "2020-02-01",
-  ukjentVerdi: "TERMINBELOP"
-})
-
-
+ 
+ /*Events*/
 $('#bnt_soklan').click(function() {
   console.log('getting data from post')
   getDataFromPost(getDataFromForm())
@@ -47,19 +56,11 @@ function getDataFromForm() {
   return vData
 }
 
-function addYearsToCurrentDate(pYear) {
-  if (pYear != null) {
-    var currDate = new Date().toISOString().slice(0, 10);
-    var currYear = new Date().toISOString().slice(0, 4);
-    return parseInt(currYear) + parseInt(pYear) + currDate.slice(4, 10)
-  } else {
-    return new Date().toISOString().slice(0, 10);
-  }
-}
+ 
 
 
 function getDataFromPost(pData) {
-  fetch('https://visningsrom.stacc.com/dd_server_laaneberegning/rest/laaneberegning/v1/nedbetalingsplan', {
+   fetch('https://visningsrom.stacc.com/dd_server_laaneberegning/rest/laaneberegning/v1/nedbetalingsplan', {
       method: 'POST',
       body: pData,
       headers: {
@@ -72,9 +73,10 @@ function getDataFromPost(pData) {
         alert(data.valideringsfeilmeldinger.feilmelding)
       } else {
         console.log(data)
-        resetTotals()
+        resetData()
         iterateOverData(data.nedbetalingsplan.innbetalinger)
         updatePaymentsOverview(data.nedbetalingsplan.innbetalinger)
+        updateDownpaymentGraph()
         updatePieGraph()
         updateBreakdown()
       }
@@ -84,11 +86,14 @@ function getDataFromPost(pData) {
     });
 }
 
-function resetTotals(){
-    gInnbetalinger = 0;
-    gRenter = 0;
-    gGebyr = 0;
-    gTotalt = 0;
+function resetData(){
+    Totals.Innbetalinger = 0;
+    Totals.Renter = 0;
+    Totals.Gebyr = 0;
+    Totals.Totalt = 0;
+
+    DownpaymentGraph.labels=[]
+    DownpaymentGraph.series=[[],[]]
 }
 
 
@@ -98,9 +103,18 @@ function iterateOverData(pData) {
   for (const element of pData) {
     insertRow(element);
     addToTotals(element)
+    createLabelAndSeries(element,JSON.parse(getDataFromForm()))
   }
 }
 
+function createLabelAndSeries(pData, pJSONBody){
+    /*for every new year, push */
+    if(!DownpaymentGraph.labels.includes(pData.dato.slice(0,4))){
+        DownpaymentGraph.labels.push(pData.dato.slice(0,4))
+        DownpaymentGraph.series[0].push(pJSONBody.laanebelop-financial(pData.restgjeld))
+        DownpaymentGraph.series[1].push(financial(pData.restgjeld))
+      }
+}
 
 /*only pass the data that is necessary to creat a single row, then return this*/
 function insertRow(pData) {
@@ -115,16 +129,43 @@ function updatePaymentsOverview(pData) {
 
  
 
+function updateDownpaymentGraph(){
+     var chart = new Chartist.Line('#chart_downpayment', {
+        labels: DownpaymentGraph.labels,
+        series: [DownpaymentGraph.series[0],DownpaymentGraph.series[1]]
+      }, {
+        low: 0,
+        showArea: true,
+        showPoint: false,
+        fullWidth: true
+      });
+      
+      chart.on('draw', function(data) {
+        if(data.type === 'line' || data.type === 'area') {
+          data.element.animate({
+            d: {
+              begin: 2000 * data.index,
+              dur: 2000,
+              from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+              to: data.path.clone().stringify(),
+              easing: Chartist.Svg.Easing.easeOutQuint
+            }
+          });
+        }
+      });
+      
+}
+
 function updatePieGraph(){
-    var label_innbetalinger = 'Innbetalinger ' + financial(gInnbetalinger).toString()
-    var label_renter = 'Renter ' + financial(gRenter).toString()
-    var label_gebyr = 'Gebyr ' + financial(gGebyr).toString()
-    var label_totalt = 'Totalt ' + financial(gTotalt).toString()
+    var label_innbetalinger = 'Lånebeløπ ' + financial(Totals.Innbetalinger).toString()
+    var label_renter = 'Renter ' + financial(Totals.Renter).toString()
+    var label_gebyr = 'Gebyr ' + financial(Totals.Gebyr).toString()
+    var label_totalt = 'Totalt ' + financial(Totals.Totalt).toString()
   
   
     var data = {
       labels: [label_innbetalinger, label_renter, label_gebyr],
-      series: [gInnbetalinger, gRenter, gGebyr]
+      series: [Totals.Innbetalinger, Totals.Renter, Totals.Gebyr]
     };
   
     var options = {
@@ -148,21 +189,21 @@ function updatePieGraph(){
       }]
     ];
   
-    new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
+    new Chartist.Pie('#chart_pie', data, options, responsiveOptions);
 }
 
 function updateBreakdown(){
-    $('#sum_lanebelop').html(financial(gInnbetalinger))
-    $('#sum_gebyrer').html(' + '+financial(gGebyr))
-    $('#sum_renter').html(' + '+financial(gRenter))
-    $('#sum_totaleInnbetalinger').html(' = '+financial(gTotalt))
+    $('#sum_lanebelop').html(financial(Totals.Innbetalinger))
+    $('#sum_gebyrer').html(' + '+financial(Totals.Gebyr))
+    $('#sum_renter').html(' + '+financial(Totals.Renter))
+    $('#sum_totaleInnbetalinger').html(' = '+financial(Totals.Totalt))
  }
 
 function addToTotals(pData) {
-  gInnbetalinger += pData.innbetaling
-  gRenter += pData.renter
-  gGebyr += pData.gebyr
-  gTotalt += pData.total
+  Totals.Innbetalinger += pData.innbetaling
+  Totals.Renter += pData.renter
+  Totals.Gebyr += pData.gebyr
+  Totals.Totalt += pData.total
 }
 
 
@@ -170,3 +211,13 @@ function addToTotals(pData) {
 function financial(x) {
   return Math.ceil(x);
 }
+
+function addYearsToCurrentDate(pYear) {
+    if (pYear != null) {
+      var currDate = new Date().toISOString().slice(0, 10);
+      var currYear = new Date().toISOString().slice(0, 4);
+      return parseInt(currYear) + parseInt(pYear) + currDate.slice(4, 10)
+    } else {
+      return new Date().toISOString().slice(0, 10);
+    }
+  }
