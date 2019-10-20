@@ -44,7 +44,7 @@ $('#bnt_soklan').click(function() {
 })
 
 $('#dropdown_local').click(function(){
-  gCurrEndpoint='http://localhost:5050/api'
+  gCurrEndpoint='http://secret-tundra-48693.herokuapp.com/api'
  })
 
 function getDataFromForm() {
@@ -71,6 +71,9 @@ function getDataFromForm() {
 }
 
 function getDataFromPost(pData) {
+
+  console.log('utilizing endpoint:', gCurrEndpoint)
+  console.log('JSON body:', pData)
   fetch(gCurrEndpoint, {
       method: 'POST',
       body: pData,
@@ -247,3 +250,9 @@ function addYearsToCurrentDate(pYear) {
     return new Date().toISOString().slice(0, 10);
   }
 }
+
+
+
+
+
+  
